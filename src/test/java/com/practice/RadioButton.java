@@ -1,6 +1,7 @@
 package com.practice;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,55 +12,51 @@ public class RadioButton {
 
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://www.tutorialspoint.com/selenium/practice/radio-button.php");
+		driver.get("https://demoqa.com/");
 
-		WebElement yes = driver.findElement(By.xpath("//input[@onclick=\"show2();\"]"));
-		WebElement impressive = driver.findElement(By.xpath("//input[@onclick=\"show3();\"]"));
-		WebElement no = driver.findElement(By.xpath("//input[@value=\"option3\"]"));
-
-		if (yes.isDisplayed() && impressive.isDisplayed() && no.isDisplayed()) {
-			System.out.println("All the buttons are displayed");
+		WebElement elements = driver
+				.findElement(By.xpath("//div[@class=\"card-body\"]//child::h5[text()=\"Elements\"]"));
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+//		js.executeScript("arguments[0].scrollIntoView(true);", elements);
+		js.executeScript("arguments[0].click();", elements);
+		WebElement radioButton = driver.findElement(By.xpath("//li[@id=\"item-2\"]//child::span[text()=\"Radio Button\"]"));
+		js.executeScript("arguments[0].click();", radioButton);
+		
+		WebElement noRadio = driver.findElement(By.id("noRadio"));
+		if (noRadio.isEnabled()) {
+			System.out.println("No RadioButton is Enabled");
 		} else {
-			System.out.println("All the Buttons are not displayed");
+			System.out.println("No RadioButton is not Enabled");
 		}
-
-		if (yes.isSelected() && impressive.isSelected() && no.isSelected()) {
-			System.out.println("All the buttons are selected");
+		
+		if (noRadio.isDisplayed()) {
+			System.out.println("No RadioButton is Displayed");
 		} else {
-			System.out.println("All the buttons are not selected");
+			System.out.println("No RadioButton is not Displayed");
 		}
-
-		if (!no.isEnabled()) {
-			System.out.println("Button is not Enabled");
+		
+		WebElement yesRadio = driver.findElement(By.id("yesRadio"));
+		if (yesRadio.isSelected()) {
+			System.out.println("Yes RadioButton is Selected");
 		} else {
-			System.out.println("Button is Enabled");
+			System.out.println("Yes RadioButton is not Selected");
 		}
-
-		Thread.sleep(3000);
-
-		yes.click();
-
-		if (yes.isSelected()) {
-			System.out.println("Yes Button is Selected");
-		} else {
-			System.out.println("Yes Button is Not Selected");
-		}
-
-		Thread.sleep(3000);
-
-		impressive.click();
-
-		if (impressive.isSelected()) {
-			System.out.println("Impressive Button is Selected");
-		} else {
-			System.out.println("Impressive Button is not Selected");
-		}
-
-		if (impressive.isSelected() && !yes.isSelected()) {
-			System.out.println("Impressive Button is Selected and Yes Button is not Selected");
-		} else {
-			System.out.println("Both the Buttons are Selected");
-		}
+		yesRadio.click();
+		
+		WebElement impressiveRadio = driver.findElement(By.id("impressiveRadio"));
+		boolean yesSelected = yesRadio.isSelected();
+		boolean impressiveNotSelected = impressiveRadio.isSelected();
+		System.out.println("Yes RadioButton is currently Selected : " + yesSelected + " & Impressive RadioButton is currently Selected : " + impressiveNotSelected);
+		
+		impressiveRadio.click();
+		boolean yesNotSelected = yesRadio.isSelected();
+		boolean impressiveSelected = impressiveRadio.isSelected();
+		System.out.println("Yes RadioButton is currently Selected : " + yesNotSelected + " & Impressive RadioButton is currently Selected : " + impressiveSelected);
+		
+		driver.quit();
+		
+		
+		
 	}
 
 }
