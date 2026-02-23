@@ -1,7 +1,5 @@
 package com.practice;
 
-import java.time.Duration;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -14,91 +12,61 @@ public class CheckBox {
 
 		WebDriver driver = new ChromeDriver();
 		driver.manage().window().maximize();
-		driver.get("https://www.tutorialspoint.com/selenium/practice/check-box.php");
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+		driver.get("https://demoqa.com/");
 
-		WebElement main1 = driver.findElement(By.id("c_bs_1"));
-		WebElement main2 = driver.findElement(By.id("c_bs_2"));
-
-		if (main1.isDisplayed() && main2.isDisplayed()) {
-			System.out.println("All the CheckBox are displayed");
-		} else {
-			System.out.println("All the CheckBox are not displayed");
-		}
-
-		if (main1.isSelected() && main2.isSelected()) {
-			System.out.println("All the CheckBox are Selected");
-		} else {
-			System.out.println("All the CheckBox are not Selected");
-		}
-
-		main1.click();
-
-		if (main1.isSelected()) {
-			System.out.println("Main Level 1 CheckBox is Selected");
-		} else {
-			System.out.println("Main Level 1 CheckBox is Selected");
-		}
-
-		main2.click();
-
-		if (main2.isSelected()) {
-			System.out.println("Main Level 2 CheckBox is Selected");
-		} else {
-			System.out.println("Main Level 2 CheckBox is Selected");
-		}
-
-		WebElement main1Plus = driver.findElement(By.xpath("//input[@id=\"c_bs_1\"]/preceding-sibling::span"));
-		main1Plus.click();
-
-		WebElement main2Plus = driver.findElement(By.xpath("//input[@id=\"c_bs_2\"]/preceding-sibling::span"));
-		main2Plus.click();
-
-		WebElement sub1 = driver.findElement(By.id("c_bf_1"));
-		WebElement sub2 = driver.findElement(By.id("c_bf_2"));
-		WebElement sub3 = driver.findElement(By.id("c_bf_3"));
-		WebElement sub4 = driver.findElement(By.id("c_bf_4"));
-
-		if (sub1.isSelected()) {
-			System.out.println("Sub Level 1 CheckBox is Selected");
-		} else {
-			System.out.println("Sub Level 1 CheckBox is Selected");
-		}
-
-		if (sub2.isSelected()) {
-			System.out.println("Sub Level 2 CheckBox is Selected");
-		} else {
-			System.out.println("Sub Level 2 CheckBox is Selected");
-		}
-
-		if (sub3.isSelected()) {
-			System.out.println("Sub Level 3 CheckBox is Selected");
-		} else {
-			System.out.println("Sub Level 3 CheckBox is Selected");
-		}
-
-		if (sub4.isSelected()) {
-			System.out.println("Sub Level 4 CheckBox is Selected");
-		} else {
-			System.out.println("Sub Level 4 CheckBox is Selected");
-		}
-
-		WebElement sub1Plus = driver.findElement(By.xpath("//input[@id=\"c_bf_1\"]/preceding-sibling::span"));
-		sub1Plus.click();
-
-		WebElement sub2Plus = driver.findElement(By.xpath("//input[@id=\"c_bf_2\"]/preceding-sibling::span"));
-		sub2Plus.click();
-
-		Thread.sleep(2000);
-		WebElement sub3Plus = driver.findElement(By.xpath("//input[@id=\"c_bf_3\"]/preceding-sibling::span"));
+		WebElement elements = driver
+				.findElement(By.xpath("//div[@class=\"card-body\"]//child::h5[text()=\"Elements\"]"));
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].scrollIntoView(true);", sub3Plus);
-		js.executeScript("arguments[0].click();", sub3Plus);
+//		js.executeScript("arguments[0].scrollIntoView(true);", elements);
+		js.executeScript("arguments[0].click();", elements);
+		WebElement checkBox = driver.findElement(By.xpath("//li[@id=\"item-1\"]//child::span[text()=\"Check Box\"]"));
+		js.executeScript("arguments[0].click();", checkBox);
 
-		Thread.sleep(2000);
-		WebElement sub4Plus = driver.findElement(By.xpath("//input[@id=\"c_bf_4\"]/preceding-sibling::span"));
-		js.executeScript("arguments[0].scrollIntoView(true);", sub4Plus);
-		js.executeScript("arguments[0].click();", sub4Plus);
+		driver.findElement(By.xpath("//span[@class=\"rc-tree-switcher rc-tree-switcher_close\"]")).click();
+		driver.findElement(By.xpath(
+				"//span[@aria-label=\"Select Desktop\"]//preceding-sibling::span[@class=\"rc-tree-switcher rc-tree-switcher_close\"]"))
+				.click();
+		WebElement commands = driver.findElement(By.xpath(
+				"//span[@class=\"rc-tree-switcher rc-tree-switcher-noop\"]//following-sibling::span[@aria-label=\"Select Commands\"]"));
+		if (commands.isSelected()) {
+			System.out.println("Commands Checkbox is Already Selected");
+		} else {
+			System.out.println("Commands Checkbox is not Selected");
+			commands.click();
+		}
+
+		driver.findElement(By.xpath(
+				"//span[@aria-label=\"Select Documents\"]//preceding-sibling::span[@class=\"rc-tree-switcher rc-tree-switcher_close\"]"))
+				.click();
+		driver.findElement(By.xpath(
+				"//span[@aria-label=\"Select Office\"]//preceding-sibling::span[@class=\"rc-tree-switcher rc-tree-switcher_close\"]"))
+				.click();
+		WebElement classified = driver.findElement(By.xpath(
+				"//span[@class=\"rc-tree-switcher rc-tree-switcher-noop\"]//following-sibling::span[@aria-label=\"Select Classified\"]"));
+		if (classified.isDisplayed()) {
+			System.out.println("Classified Checkbox is Displayed");
+		} else {
+			System.out.println("Classified Checkbox is not Displayed");
+		}
+		classified.click();
+		commands.click();
+
+		driver.findElement(By.xpath(
+				"//span[@aria-label=\"Select Downloads\"]//preceding-sibling::span[@class=\"rc-tree-switcher rc-tree-switcher_close\"]"))
+				.click();
+		WebElement excelFile = driver.findElement(By.xpath(
+				"//span[@class=\"rc-tree-switcher rc-tree-switcher-noop\"]//following-sibling::span[@aria-label=\"Select Excel File.doc\"]"));
+		if (excelFile.isEnabled()) {
+			System.out.println("Excel File Checkbox is Enabled");
+		} else {
+			System.out.println("Excel File Checkbox is not Enabled");
+		}
+		excelFile.click();
+		driver.findElement(By.xpath(
+				"//span[@class=\"rc-tree-switcher rc-tree-switcher-noop\"]//following-sibling::span[@aria-label=\"Select Notes\"]")).click();
+		
+		driver.quit();
+		
 
 	}
 }
